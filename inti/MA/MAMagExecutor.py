@@ -5,10 +5,22 @@ import psutil
 
 ma_obj = None
 def process_wrapper(chunkStart, chunkSize):
+    """
+    wrapper to execute the function outside on the class,
+    this trick is required for the module multiprocessing
+    to avoid seralization problems  
+    """
     global ma_obj 
     return ma_obj.process_wrapper(chunkStart, chunkSize)
 
 def MAMagExecutor(obj,max_threads=None):
+    """
+    Function to call the parallel insertion of data by chunks
+    using multiprocessing module.
+    Keyword arguments:
+    obj -- Object from class MAMagBase
+    max_threads -- total number processors to use in parallel
+    """
     global ma_obj
     ma_obj = obj
     if max_threads is None:

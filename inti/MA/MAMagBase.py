@@ -7,7 +7,7 @@ import logging
 import multiprocessing as mp
 import psutil
 
-from moai.MA.MAMagExecutor import MAMagExecutor
+from inti.MA.MAMagExecutor import MAMagExecutor
 
 
 class MAMagBase:
