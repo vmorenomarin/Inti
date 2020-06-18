@@ -1,6 +1,6 @@
 
 
-from moai.MA.MAMagBase import MAMagBase
+from inti.MA.MAMagBase import MAMagBase
 import logging
 
 class MAMagLoader:
