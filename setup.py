@@ -64,7 +64,6 @@ def main():
         # Dependent packages (distributions)
         install_requires=[
             'pymongo==3.10.1',
-            'pandas==1.0.1',
             'numpy==1.18.1',
             'requests==2.22.0',
             'psutil==5.7.0',
