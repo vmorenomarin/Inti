@@ -12,7 +12,7 @@ from inti.MA.MAMagExecutor import MAMagExecutor
 
 class MAMagBase:
     def __init__(self,file_name,database_name,collection,col_names,col_indexes,sep='\t', buffer_size=1024*1024, dburi='mongodb://localhost:27017/', hunabku_server = None, hunabku_apikey = None,
-                 log_file='gsma.log', info_level=logging.DEBUG):
+                 log_file='mamagbase.log', info_level=logging.DEBUG):
         self.hunabku_server = hunabku_server
         self.hunabku_apikey = hunabku_apikey
         self.file_name = file_name
