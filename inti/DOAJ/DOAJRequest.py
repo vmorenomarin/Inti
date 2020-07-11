@@ -23,7 +23,7 @@ class DOAJRequest:
         self.collection = self.db[collection]
 
     def getIssnLists(self):
-        """Returns print and electronic ISSN from Lens collection."""        
+        """Returns print and electronic ISSN from Lens collection."""
         pissn_list = []
         eissn_list = []
         for register in self.collection.find():
