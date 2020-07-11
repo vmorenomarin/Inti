@@ -50,7 +50,7 @@ def main():
         include_package_data=True,
 
         # Details
-        url="https://github.com/colav/DOAJ",
+        url="https://github.com/colav/Inti",
 
         #
         license="BSD",
