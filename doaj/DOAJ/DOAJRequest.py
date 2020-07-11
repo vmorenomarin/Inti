@@ -1,30 +1,27 @@
 #!/usr/bin/env python3
 
-#author:  Víctor Moreno Marín, Gerardo Gutiérrez
-#email: vmorenomarin@gmail.com, muzgash@gmail.com, 
+#author: Victor Moreno Marin, Gerardo Gutierrez
+# #email: vmorenomarin@gmail.com, muzgash@gmail.com
 
 from pymongo import MongoClient
-from bson.objectid import ObjectId
 from forex_python.converter import CurrencyRates
-import requests             
-import json   
-import numpy as np  
-
+import requests
+import numpy as np
 
 class DOAJRequest:
-    '''
-    Create a DOAJ object to request and save data from DOAJ site using its API.
-    '''
+
+    '''Create a DOAJ object to request and save data from DOAJ site using its API.'''
 
     def __init__(self,database_name,collection):
+        
+        '''Class to get requested data from DOAJ API. Needs database name and inner collection to get the ISSN codes list.'''
         self.client = MongoClient()
         self.db = self.client[database_name]
         self.collection = self.db[collection]
-     
-    def getIssnLists(self): 
-        '''
-        Returns print and electronic ISSN's from Lens collection.
-        '''
+
+    def getIssnLists(self):
+
+        ''''Returns print and electronic ISSN from Lens collection.'''
         pissn_list = []
         eissn_list = []
         for register in self.collection.find():
@@ -40,10 +37,11 @@ class DOAJRequest:
 
         return pissn_list, eissn_list
 
-    def getAPC(self,issn_list=[]):      
+    def getAPC(self,issn_list):
+
         '''
         Returns whole data requested from DOAJ. Data is storage as a dictionary.
-        Also returns a dictionary only with hata that has APC values. 
+        Also returns a dictionary only with hata that has APC values.
         '''
         self.issn_list=issn_list
         apc_dict = {}
@@ -56,21 +54,19 @@ class DOAJRequest:
             data_request = data
             if len(data['results']) > 0:
                 if not 'apc' in data['results'][0]['bibjson']:
-                    continue
-                if 'apc' in data['results'][0]['bibjson']:
+                                        continue
+                if 'apc' in data['results'][0]['bibjson']:  
                     apc = data['results'][0]['bibjson']['apc']
                     apc_dict[issn_formated] = apc
 
         return apc_dict, data_request
 
-    def convert_apc2usd(self,dictionary={}):
-        '''                 
-        Converts APC average price to USD currency. Needs dictionary with ISSN's 
-        with APC data.
-        '''    
+    def convert_apc2usd(self,dictionary):
+        '''Converts APC average price to USD currency. Needs dictionary with ISSN's with APC data.'''
+
         self.dictionary=dictionary
 
-        c = CurrencyRates()       
+        c = CurrencyRates()
         for issn in self.dictionary.keys():
             if  self.dictionary[issn]['currency'] != 'USD':
                 currency_foreign = self.dictionary[issn]['currency']
