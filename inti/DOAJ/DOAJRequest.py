@@ -9,20 +9,21 @@ import requests
 import numpy as np
 
 class DOAJRequest:
+    
     """Create a DOAJ object to request and save data from DOAJ site using its API."""
 
     def __init__(self,database_name,collection):
+        
         """
         Class to get requested data from DOAJ API. 
-        Needs database name and inner collection to get the ISSN codes list.
+        Requiere database name and inner collection to get the ISSN codes list.
         """
         self.client = MongoClient()
         self.db = self.client[database_name]
         self.collection = self.db[collection]
 
     def getIssnLists(self):
-        """Returns print and electronic ISSN from Lens collection."""
-        
+        """Returns print and electronic ISSN from Lens collection."""        
         pissn_list = []
         eissn_list = []
         for register in self.collection.find():
@@ -54,7 +55,7 @@ class DOAJRequest:
             data_request = data
             if len(data['results']) > 0:
                 if not 'apc' in data['results'][0]['bibjson']:
-                                        continue
+                    continue
                 if 'apc' in data['results'][0]['bibjson']:  
                     apc = data['results'][0]['bibjson']['apc']
                     apc_dict[issn_formated] = apc
