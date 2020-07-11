@@ -9,19 +9,20 @@ import requests
 import numpy as np
 
 class DOAJRequest:
-
-    '''Create a DOAJ object to request and save data from DOAJ site using its API.'''
+    """Create a DOAJ object to request and save data from DOAJ site using its API."""
 
     def __init__(self,database_name,collection):
-        
-        '''Class to get requested data from DOAJ API. Needs database name and inner collection to get the ISSN codes list.'''
+        """
+        Class to get requested data from DOAJ API. 
+        Needs database name and inner collection to get the ISSN codes list.
+        """
         self.client = MongoClient()
         self.db = self.client[database_name]
         self.collection = self.db[collection]
 
     def getIssnLists(self):
-
-        ''''Returns print and electronic ISSN from Lens collection.'''
+        """Returns print and electronic ISSN from Lens collection."""
+        
         pissn_list = []
         eissn_list = []
         for register in self.collection.find():
@@ -38,11 +39,10 @@ class DOAJRequest:
         return pissn_list, eissn_list
 
     def getAPC(self,issn_list):
-
-        '''
+        """
         Returns whole data requested from DOAJ. Data is storage as a dictionary.
         Also returns a dictionary only with hata that has APC values.
-        '''
+        """
         self.issn_list=issn_list
         apc_dict = {}
         data_request = {}
@@ -62,7 +62,10 @@ class DOAJRequest:
         return apc_dict, data_request
 
     def convert_apc2usd(self,dictionary):
-        '''Converts APC average price to USD currency. Needs dictionary with ISSN's with APC data.'''
+        """
+        Converts APC average price to USD currency. Needs dictionary
+        with ISSN with APC data.
+        """
 
         self.dictionary=dictionary
 
