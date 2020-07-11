@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from DOAJ.DOAJRequest import DOAJRequest
+from inti.DOAJ.DOAJRequest import DOAJRequest
 
 import argparse
 import logging
@@ -18,5 +18,6 @@ loader=DOAJRequest(database_name=args.db, collection=args.collection)
 
 logging.warning("--------------------------------------------------------\n")
 logging.warning("Starting DOAJ Request ")
+
 logging.warning("DOAJ request finished! ")
 logging.warning("--------------------------------------------------------\n")
