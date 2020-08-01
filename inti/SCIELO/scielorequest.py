@@ -1,8 +1,5 @@
 from pymongo import MongoClient
-from bson.objectid import ObjectId
-
 from articlemeta.client import RestfulClient
-from xylose.scielodocument import Article, Journal, Issue
 
 class ScieloRequest:
     """
@@ -11,9 +8,10 @@ class ScieloRequest:
     The class methods use the Scielo API to get database documents.
     """
     def __init__(self, database_name='scielo'):
-        
-        self.client = MongoClient()
-        self.db = self.client[database_name]
+        """
+        """
+        self.client=MongoClient()
+        self.db=self.client[database_name]
         #self.collection = self.db[collection]
 
     # Client to get Scielo information
@@ -21,7 +19,7 @@ class ScieloRequest:
             
     def get_collections(self, scielo_client):
         """
-        Gets collections from Scielo servers. 
+        Gets collections from Scielo servers.
         """
         collections=scielo_client.collections()
         for collection in collections:
@@ -34,9 +32,9 @@ class ScieloRequest:
         """
         list_collections = []
         for collection in self.db["collection"]:
-            code=collection[code]
+            collection_code=collection[code]
             name=collection['code']['name']['en']
-            list_collections.append({name: code})
+            list_collections.append({name: collection_code})
 
         return list_collections
 
@@ -44,7 +42,7 @@ class ScieloRequest:
         """
         Gets raw data of journals from Scielo servers.
         A collection identification id is added in data to
-        relate journals belong from each collection. 
+        relate journals belong from each collection.
         """
         for collection in self.db['collections'].find():
             collection_code=collection['code']
@@ -75,13 +73,21 @@ class ScieloRequest:
         """
         for collection in self.db['collections'].find():
             collection_code=collection['code']
-            for journal in self.db['journals'].find():
-                try:
+            with self.db['journals'].find(no_cursor_timeout=True) as cursor:
+                for journal in cursor:
                     journal_issn=journal['issns'][0]
                     docs=scielo_client.documents(collection_code,journal_issn)
                     for article in docs:
                         article.data['journal_id']=journal['_id']
                         self.db['stage'].insert_one(article.data)
-
-                except:
-                    continue
+            """ try:    
+                for journal in self.db['journals'].find():
+                    journal_issn=journal['issns'][0]
+                    docs=scielo_client.documents(collection_code,journal_issn)
+                    for article in docs:
+                        article.data['journal_id']=journal['_id']
+                        self.db['stage'].insert_one(article.data)
+            except Exception():
+                parse_Exception
+            finally:
+                cursor.close() """
