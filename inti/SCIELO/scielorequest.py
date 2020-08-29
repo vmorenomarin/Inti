@@ -1,5 +1,6 @@
 from pymongo import MongoClient
 from articlemeta.client import RestfulClient
+import json
 
 class ScieloRequest:
     """
@@ -13,15 +14,16 @@ class ScieloRequest:
         self.client=MongoClient()
         self.db=self.client[database_name]
         #self.collection = self.db[collection]
+        self.scielo_client = RestfulClient()
 
     # Client to get Scielo information
-    scielo_client = RestfulClient()
+    
             
-    def get_collections(self, scielo_client):
+    def get_collections(self):
         """
         Gets collections from Scielo servers.
         """
-        collections=scielo_client.collections()
+        collections=self.scielo_client.collections()
         for collection in collections:
             self.db['collections'].insert_one(collection)
     
@@ -38,7 +40,7 @@ class ScieloRequest:
 
         return list_collections
 
-    def get_journals(self, scielo_client):
+    def get_journals(self):
         """
         Gets raw data of journals from Scielo servers.
         A collection identification id is added in data to
@@ -46,11 +48,11 @@ class ScieloRequest:
         """
         for collection in self.db['collections'].find():
             collection_code=collection['code']
-            for journal in scielo_client.journals(collection_code):
+            for journal in self.scielo_client.journals(collection_code):
                 journal.data['collection_id']=collection['_id']
                 self.db['journals'].insert_one(journal.data)
 
-    def list_jornals_in_collection(self,collection_code):
+    def list_jornals_in_collection(self, collection_code):
         """
         List dababse SciELo colections. Displays its name and alpha-3
         code.
@@ -65,7 +67,7 @@ class ScieloRequest:
 
         return journals_in_collection
 
-    def get_articles(self, scielo_client):
+    '''def get_articles(self, scielo_client):
         """
         Gets raw data of articles from Scielo servers.
         A journal database identification id is added in data to
@@ -90,4 +92,57 @@ class ScieloRequest:
             except Exception():
                 parse_Exception
             finally:
-                cursor.close() """
+                cursor.close() """'''
+
+    def create_status(journal_list):
+        """
+        This method builds artciles downloaded status list for a specific collection. 
+        The list is saved as text file.
+        """
+        cursor=self.db['stage'].find({'downloaded':1})
+        dl_articles=[] 
+        for i in cursor:
+            code=i.data['code']
+            dl_articles.append(code)
+        
+        with open('status.txt', 'w') as f:
+            f.write(json.dumps(dl_articles))
+        
+
+    def check_status(journal_list):
+        """
+        This method checks the status for downloaded articles for a specific collection. 
+        Loads the text file createrd by create_status method.
+        """
+        cursor=self.db['stage'].find({'downloaded':1})
+        dl_articles=[] 
+        for i in cursor:
+            code=i.data['code']
+            dl_articles.append(code)
+        
+        with open('status.txt', 'w') as f:
+            f.write(json.dumps(dl_articles))
+  
+
+
+    def get_articles(self):
+        """
+        Gets raw data of articles from Scielo servers.
+        A journal database identification id is added in data to
+        relate articles belong from each journal. 
+        """
+        cursor = self.db['journals'].find(no_cursor_timeout=True)
+        for journal in cursor:
+            issn=journal['issns'][0]
+            code_collection=journal['collection']
+            docs=self.scielo_client.documents(code_collection,issn)
+            for article in docs:
+                article.data['journal_id']=journal['_id']
+                article.data['downloaded']=1
+                result=self.db['stage'].insert_one(article.data)
+            '''
+            checked_journals.append(issn)
+            saved_docs[code_collection]=checked_journals
+            date_string=time.strftime('%Y%m%d_%H%M%S')
+            checkpoint[date_string]=saved_docs
+            '''
