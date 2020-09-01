@@ -4,49 +4,44 @@ import json
 
 class ScieloRequest:
     """
-    Request class to build a SciELO database with three central collections:
-    collections, journals and documents.
-    The class methods use the Scielo API to get database documents.
+    Requests class to build a SciELO database with three central collections: 
+    'collections' (mainly countries), 'journals' and 'articles'. 
+    The class methods use the SciELO API to get database documents.
     """
-    def __init__(self, database_name='scielo'):
+    def __init__(self, database_name='scielo-test'):
         """
         """
         self.client=MongoClient()
         self.db=self.client[database_name]
-        #self.collection = self.db[collection]
         self.scielo_client = RestfulClient()
 
-    # Client to get Scielo information
-    
-            
     def get_collections(self):
         """
-        Gets collections from Scielo servers.
+        Gets collections from SciELO database.
         """
         collections=self.scielo_client.collections()
         for collection in collections:
             self.db['collections'].insert_one(collection)
-    
+
     def list_collections(self):
         """
-        List dababse SciELo colections. Displays its name and alpha-3
-        code.
+        Lists database SciELO collections. Displays its name and alpha-3 code.
         """
-        list_collections = []
-        for collection in self.db["collection"]:
-            collection_code=collection[code]
-            name=collection['code']['name']['en']
+        list_collections=[]
+        cursor=self.db["collections"].find()
+        for collection in cursor:
+            collection_code=collection['code']
+            name=collection['name']['en']
             list_collections.append({name: collection_code})
-
         return list_collections
 
     def get_journals(self):
         """
-        Gets raw data of journals from Scielo servers.
-        A collection identification id is added in data to
-        relate journals belong from each collection.
+        Gets raw data of journals from SciELO. A collection identification id 
+        is added in data to relate journals belong from each collection.
         """
-        for collection in self.db['collections'].find():
+        cursor=self.db['collections'].find()
+        for collection in cursor:
             collection_code=collection['code']
             for journal in self.scielo_client.journals(collection_code):
                 journal.data['collection_id']=collection['_id']
@@ -54,95 +49,59 @@ class ScieloRequest:
 
     def list_jornals_in_collection(self, collection_code):
         """
-        List dababse SciELo colections. Displays its name and alpha-3
-        code.
+        Lists database SciELO collections. Returns a tuple with a dictionary 
+        that has ISSN code and journal name; the another object tuple's is the total journals number.
         """
         journals_in_collection = {}
-        for collection in self.db['collections']:
-            if collection[collection_code]:
-                for journal in self.db['journals']:
-                    journal_name=journal['data']['v100']
-                    journal_issn=journal['issns'][0]
+        for journal in self.db['journals'].find():
+            if collection_code in journal['collection']:
+                journal_name=journal['v100'][0]['_']
+                journal_issn=journal['issns'][0]
                 journals_in_collection[journal_issn]=journal_name
+        return journals_in_collection, len(journals_in_collection.keys())
 
-        return journals_in_collection
-
-    '''def get_articles(self, scielo_client):
+    def update_status(self,code_article,dl_articles):
         """
-        Gets raw data of articles from Scielo servers.
-        A journal database identification id is added in data to
-        relate articles belong from each journal. 
-        """
-        for collection in self.db['collections'].find():
-            collection_code=collection['code']
-            with self.db['journals'].find(no_cursor_timeout=True) as cursor:
-                for journal in cursor:
-                    journal_issn=journal['issns'][0]
-                    docs=scielo_client.documents(collection_code,journal_issn)
-                    for article in docs:
-                        article.data['journal_id']=journal['_id']
-                        self.db['stage'].insert_one(article.data)
-            """ try:    
-                for journal in self.db['journals'].find():
-                    journal_issn=journal['issns'][0]
-                    docs=scielo_client.documents(collection_code,journal_issn)
-                    for article in docs:
-                        article.data['journal_id']=journal['_id']
-                        self.db['stage'].insert_one(article.data)
-            except Exception():
-                parse_Exception
-            finally:
-                cursor.close() """'''
-
-    def create_status(journal_list):
-        """
-        This method builds artciles downloaded status list for a specific collection. 
+        This method updates articles downloaded status list for a specific collection.
         The list is saved as text file.
         """
-        cursor=self.db['stage'].find({'downloaded':1})
-        dl_articles=[] 
-        for i in cursor:
-            code=i.data['code']
-            dl_articles.append(code)
-        
+        dl_articles.append(code_article)
         with open('status.txt', 'w') as f:
             f.write(json.dumps(dl_articles))
-        
 
-    def check_status(journal_list):
+    def check_status(self):
         """
-        This method checks the status for downloaded articles for a specific collection. 
-        Loads the text file createrd by create_status method.
+        This method checks the status for downloaded articles for a specific collection
+        to avoid repeats objects in the collection; if the collection is empty, 
+        creates a list to save the downloaded article code id.
         """
-        cursor=self.db['stage'].find({'downloaded':1})
-        dl_articles=[] 
-        for i in cursor:
-            code=i.data['code']
-            dl_articles.append(code)
-        
-        with open('status.txt', 'w') as f:
-            f.write(json.dumps(dl_articles))
-  
-
+        documents_count=self.db['stage'].count_documents({})
+        if documents_count==0:
+            dl_articles=[]
+            print("Empty collection.")
+            return dl_articles
+        else:
+            with open('status.txt', 'r') as f:
+                dl_articles=json.loads(f.read())
+                print("No empty collection. Number of documents: {}".format(documents_count))
+            return dl_articles
 
     def get_articles(self):
         """
-        Gets raw data of articles from Scielo servers.
-        A journal database identification id is added in data to
-        relate articles belong from each journal. 
+        Gets raw data of articles from Scielo. A journal identification is added in data to
+        relate articles belong from each journal.
         """
         cursor = self.db['journals'].find(no_cursor_timeout=True)
         for journal in cursor:
             issn=journal['issns'][0]
             code_collection=journal['collection']
-            docs=self.scielo_client.documents(code_collection,issn)
-            for article in docs:
-                article.data['journal_id']=journal['_id']
-                article.data['downloaded']=1
-                result=self.db['stage'].insert_one(article.data)
-            '''
-            checked_journals.append(issn)
-            saved_docs[code_collection]=checked_journals
-            date_string=time.strftime('%Y%m%d_%H%M%S')
-            checkpoint[date_string]=saved_docs
-            '''
+            documents=self.scielo_client.documents(code_collection,issn)
+            dl_articles=self.check_status()
+            for article in documents:
+                code_article=article.data['code']
+                if code_article not in dl_articles:
+                    article.data['journal_id']=journal['_id']
+                    self.db['stage'].insert_one(article.data)
+                    self.update_status(code_article,dl_articles)
+                else:
+                    continue
