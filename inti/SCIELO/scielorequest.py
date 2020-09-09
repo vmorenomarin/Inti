@@ -6,9 +6,10 @@ class ScieloRequest:
 
     """
     Requests class to build a SciELO database with three central collections:
-    
+
     'collections' (mainly countries), 'journals' and 'articles'.
     The class methods use the SciELO API to get database documents.
+
     """
     def __init__(self, database_name='scielo-test',dbserver_url="localhost",port=27017):
         """
