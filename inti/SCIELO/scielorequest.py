@@ -4,9 +4,7 @@ import json
 
 class ScieloRequest:
 
-    """
-
-    Requests class to build a SciELO database with three central collections:
+    """Requests class to build a SciELO database with three central collections:
 
     'collections' (mainly countries), 'journals' and 'articles'.
     The class methods use the SciELO API to get database documents.
