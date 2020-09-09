@@ -13,7 +13,6 @@ class DOAJRequest:
     """Create a DOAJ object to request and save data from DOAJ site using its API."""
 
     def __init__(self,database_name,collection):
-
         """Class to get requested data from DOAJ API.
 
         Requiere database name and inner collection to get the ISSN codes list.
@@ -41,8 +40,9 @@ class DOAJRequest:
         return pissn_list, eissn_list
 
     def getAPC(self,issn_list):
-        """
-        Returns whole data requested from DOAJ. Data is storage as a dictionary.
+        """Returns whole data requested from DOAJ. 
+
+        Data is storage as a dictionary.
         Also returns a dictionary only with hata that has APC values.
         """
         self.issn_list=issn_list
@@ -64,9 +64,9 @@ class DOAJRequest:
         return apc_dict, data_request
 
     def convert_apc2usd(self,dictionary):
-        """
-        Converts APC average price to USD currency. Needs dictionary
-        with ISSN with APC data.
+        """Converts APC average price to USD currency. 
+
+        Needs dictionary with ISSN with APC data.
         """
 
         self.dictionary=dictionary
