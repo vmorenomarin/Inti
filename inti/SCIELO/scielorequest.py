@@ -8,10 +8,10 @@ class ScieloRequest:
     'collections' (mainly countries), 'journals' and 'articles'. 
     The class methods use the SciELO API to get database documents.
     """
-    def __init__(self, database_name='scielo-test'):
+    def __init__(self, database_name='scielo-test',dbserver_url="localhost",port=27017):
         """
         """
-        self.client=MongoClient()
+        self.client=MongoClient(dbserver_url,port)
         self.db=self.client[database_name]
         self.scielo_client = RestfulClient()
 
@@ -44,7 +44,7 @@ class ScieloRequest:
         for collection in cursor:
             collection_code=collection['code']
             for journal in self.scielo_client.journals(collection_code):
-                journal.data['collection_id']=collection['_id']
+                journal['collection_id']=collection['_id']
                 self.db['journals'].insert_one(journal.data)
 
     def list_jornals_in_collection(self, collection_code):
@@ -60,13 +60,13 @@ class ScieloRequest:
                 journals_in_collection[journal_issn]=journal_name
         return journals_in_collection, len(journals_in_collection.keys())
 
-    def update_status(code_article,dl_articles):
+    def update_status(self,code_article,dl_articles):
         """
         This method updates articles downloaded status list for a specific collection.
         The list is saved as text file.
         """
         dl_articles.append(code_article)
-        with open('status.txt', 'w') as f:
+        with open('status-bk2.txt', 'w') as f:
             f.write(json.dumps(dl_articles))
 
     def check_status(self):
@@ -81,10 +81,19 @@ class ScieloRequest:
             print("Empty collection.")
             return dl_articles
         else:
-            with open('status.txt', 'r') as f:
+            with open('status-bk2.txt', 'r') as f:
                 dl_articles=json.loads(f.read())
-                print("No empty collection. Number of documents: {}".format(documents_count))
-            return dl_articles
+                if len(dl_articles) < documents_count:
+                    dl_articles=[]
+                    print("Incomplete downloaded list. Building downloaded status for articles in collection.")
+                    for article in self.db['stage'].find():
+                        code_article=article['code']
+                        dl_articles.append(code_article)
+                    print("Number of documents: {}").format(documents_count)
+                    return dl_articles
+                else:
+                    print("No empty collection. Number of documents: {}".format(documents_count))
+                    return dl_articles
 
     def get_articles(self):
         """
@@ -93,15 +102,19 @@ class ScieloRequest:
         """
         cursor = self.db['journals'].find(no_cursor_timeout=True)
         for journal in cursor:
-            issn=journal['issns'][0]
-            code_collection=journal['collection']
-            documents=self.scielo_client.documents(code_collection,issn)
-            dl_articles=self.check_status()
-            for article in documents:
-                code_article=article.data['code']
-                if code_article not in dl_articles:
-                    article.data['journal_id']=journal['_id']
-                    self.db['stage'].insert_one(article.data)
-                    self.update_status(code_article,dl_articles)
-                else:
-                    continue
+            if journal['dl_status']==1:
+                continue
+            else:
+                issn=journal['issns'][0]
+                code_collection=journal['collection']
+                documents=self.scielo_client.documents(code_collection,issn)
+                dl_articles=self.check_status()
+                for article in documents:
+                    code_article=article.data['code']
+                    if code_article in dl_articles:
+                        continue
+                    else:
+                        article.data['journal_id']=journal['_id']
+                        self.db['stage'].insert_one(article.data)
+                        self.update_status(code_article,dl_articles)
+            journal['dl_status']=1
