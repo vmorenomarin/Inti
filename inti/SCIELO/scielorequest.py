@@ -3,7 +3,6 @@ from articlemeta.client import RestfulClient
 import json
 
 class ScieloRequest:
-
     """Requests class to build a SciELO database with three central collections:
 
     'collections' (mainly countries), 'journals' and 'articles'.
