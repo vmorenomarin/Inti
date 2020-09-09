@@ -8,14 +8,11 @@ from forex_python.converter import CurrencyRates
 import requests
 import numpy as np
 
-class DOAJRequest:
-    
-    """Create a DOAJ object to request and save data from DOAJ site using its API."""
-
+class DOAJRequest:   
+"""Create a DOAJ object to request and save data from DOAJ site using its API."""
     def __init__(self,database_name,collection):
-        
         """
-        Class to get requested data from DOAJ API. 
+        Class to get requested data from DOAJ API.
         Requiere database name and inner collection to get the ISSN codes list.
         """
         self.client = MongoClient()
@@ -56,7 +53,7 @@ class DOAJRequest:
             if len(data['results']) > 0:
                 if not 'apc' in data['results'][0]['bibjson']:
                     continue
-                if 'apc' in data['results'][0]['bibjson']:  
+                if 'apc' in data['results'][0]['bibjson']:
                     apc = data['results'][0]['bibjson']['apc']
                     apc_dict[issn_formated] = apc
 

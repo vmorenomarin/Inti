@@ -61,7 +61,7 @@ class ScieloRequest:
                 journals_in_collection[journal_issn]=journal_name
         return journals_in_collection, len(journals_in_collection.keys())
 
-    def update_status(code_article,dl_articles):
+    def update_status(self,code_article,dl_articles):
         """
         This method updates articles downloaded status list for a specific collection.
         The list is saved as text file.
