@@ -12,6 +12,7 @@ class ScieloRequest:
     The class methods use the SciELO API to get database documents.
 
     """
+
     def __init__(self, database_name='scielo-test',dbserver_url="localhost",port=27017):
         """
         """
