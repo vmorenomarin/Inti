@@ -11,6 +11,7 @@ import numpy as np
 class DOAJRequest:
 
     """
+
     Create a DOAJ object to request and save data from DOAJ site using its API.
 
     """
