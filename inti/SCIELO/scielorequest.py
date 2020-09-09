@@ -3,9 +3,10 @@ from articlemeta.client import RestfulClient
 import json
 
 class ScieloRequest:
+    
     """
-    Requests class to build a SciELO database with three central collections: 
-    'collections' (mainly countries), 'journals' and 'articles'. 
+    Requests class to build a SciELO database with three central collections:
+    'collections' (mainly countries), 'journals' and 'articles'.
     The class methods use the SciELO API to get database documents.
     """
     def __init__(self, database_name='scielo-test',dbserver_url="localhost",port=27017):
@@ -37,7 +38,7 @@ class ScieloRequest:
 
     def get_journals(self):
         """
-        Gets raw data of journals from SciELO. A collection identification id 
+        Gets raw data of journals from SciELO. A collection identification id
         is added in data to relate journals belong from each collection.
         """
         cursor=self.db['collections'].find()
@@ -49,7 +50,7 @@ class ScieloRequest:
 
     def list_jornals_in_collection(self, collection_code):
         """
-        Lists database SciELO collections. Returns a tuple with a dictionary 
+        Lists database SciELO collections. Returns a tuple with a dictionary
         that has ISSN code and journal name; the another object tuple's is the total journals number.
         """
         journals_in_collection = {}
@@ -60,7 +61,7 @@ class ScieloRequest:
                 journals_in_collection[journal_issn]=journal_name
         return journals_in_collection, len(journals_in_collection.keys())
 
-    def update_status(self,code_article,dl_articles):
+    def update_status(code_article,dl_articles):
         """
         This method updates articles downloaded status list for a specific collection.
         The list is saved as text file.
