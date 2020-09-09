@@ -9,7 +9,7 @@ import requests
 import numpy as np
 
 class DOAJRequest:   
-"""Create a DOAJ object to request and save data from DOAJ site using its API."""
+    """Create a DOAJ object to request and save data from DOAJ site using its API."""
     def __init__(self,database_name,collection):
         """
         Class to get requested data from DOAJ API.
