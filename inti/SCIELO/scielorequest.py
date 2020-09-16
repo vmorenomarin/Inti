@@ -122,33 +122,28 @@ class ScieloRequest:
         relate articles belong from each journal.
         """
         cursor = self.db['journals'].find(no_cursor_timeout=True)
-        check_cache()
+        data=self.check_cache()
         for journal in cursor:
-            if check_cache():
-            else:
+            id_journal = str(journal['_id'])
+            if id_journal in data:
                 issn = journal['issns'][0]
                 code_collection = journal['collection']
                 documents = self.scielo_client.documents(code_collection, issn)
-                dl_articles = self.check_status()
                 for article in documents:
-                    code_article = article.data['code']
-                    if code_article in dl_articles:
-                        continue
-                    else:
-                        article.data['journal_id'] = journal['_id']
-                        self.db['stage'].insert_one(article.data)
-                        #self.update_status(code_article, dl_articles)
+                    article.data['journal_id'] = journal['_id']
+                    self.db['stage'].insert_one(article.data)
+                    #self.update_status(code_article, dl_articles)
             
-            self.db['cache'].update_one({'_id': self.json.loads(_id)}, {"$set":data}) 
+            self.db['cache'].update_one({'_id': json.loads('_id')}, {"$set":data}) 
 
-    def check_cache(self)
+    def check_cache(self):
         data=[]
         list_id=[]
         cursor=self.db['cache'].find()
         for cache_item in cursor:
             list_id.append(cache_item['_id'])
         for id_cache in list_id:
-            for dl_jrl in db['cache'].find({'_id':id_cache},{'downloaded': 0}):
+            for dl_jrl in self.db['cache'].find({'_id':id_cache},{'downloaded': 0}):
                 key_list=list(dl_jrl.keys())
                 data.append(key_list[1])
         return data
