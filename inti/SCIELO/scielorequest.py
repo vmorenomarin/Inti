@@ -148,7 +148,7 @@ class ScieloRequest:
         for cache_item in cursor:
             list_id.append(cache_item['_id'])
         for id_cache in list_id:
-            for dl_jrl in db['cache'].find({'_id':i},{'download': 0}):
+            for dl_jrl in db['cache'].find({'_id':id_cache},{'downloaded': 0}):
                 key_list=list(dl_jrl.keys())
                 data.append(key_list[1])
         return data
