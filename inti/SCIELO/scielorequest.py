@@ -75,7 +75,7 @@ class ScieloRequest:
         with open('status-bk2.txt', 'w') as f:
             f.write(json.dumps(dl_articles))
             '''
-   
+
     '''def check_status(self):
         """Check the status for downloaded articles.
 
@@ -111,9 +111,28 @@ class ScieloRequest:
         cursor = self.db['journals'].find()
         data = {}
         for journal in cursor:
-            id_journal = str(journal['_id'])
-            data = {id_journal:{'downloaded':0}}
+            id_journal = journal['_id']
+            data = {'id_journal': id_journal, 'downloaded': 0}
             self.db['cache'].insert_one(data)
+
+    def check_cache(self):
+        data = []
+        list_id = []
+        cursor = self.db['cache'].find()
+        for cache_item in cursor:
+            list_id.append(cache_item['_id'])
+        for id_cache in list_id:
+            for dl_jrl in self.db['cache'].find({'_id': id_cache},
+                                                {'downloaded': 0}):
+                jrl_list = dl_jrl['id_journal']
+                data.append(jrl_list)
+        return data
+
+    def update_cache(self, id_journal, new_data):
+        cursor = self.db['cache'].find({'id_journal': id_journal})
+        for cache_item in cursor:
+            _id = cache_item['_id']
+        self.db['cache'].update_one({'_id': _id}, {"$set": new_data})
 
     def get_articles(self):
         """Get raw data of articles from Scielo.
@@ -122,9 +141,9 @@ class ScieloRequest:
         relate articles belong from each journal.
         """
         cursor = self.db['journals'].find(no_cursor_timeout=True)
-        data=self.check_cache()
+        data = self.check_cache()
         for journal in cursor:
-            id_journal = str(journal['_id'])
+            id_journal = journal['_id']
             if id_journal in data:
                 issn = journal['issns'][0]
                 code_collection = journal['collection']
@@ -132,19 +151,7 @@ class ScieloRequest:
                 for article in documents:
                     article.data['journal_id'] = journal['_id']
                     self.db['stage'].insert_one(article.data)
-                    #self.update_status(code_article, dl_articles)
-            
-            self.db['cache'].update_one({'_id': json.loads('_id')}, {"$set":data}) 
-
-    def check_cache(self):
-        data=[]
-        list_id=[]
-        cursor=self.db['cache'].find()
-        for cache_item in cursor:
-            list_id.append(cache_item['_id'])
-        for id_cache in list_id:
-            for dl_jrl in self.db['cache'].find({'_id':id_cache},{'downloaded': 0}):
-                key_list=list(dl_jrl.keys())
-                data.append(key_list[1])
-        return data
-            
+                new_data = {'id_journal': id_journal, 'downloaded': 1}
+                self.update_cache(id_journal, new_data)
+            else:
+                continue
