@@ -11,12 +11,11 @@ class ScieloRequest:
     The class methods use the SciELO API to get database documents.
 
     """
-
     def __init__(self, database_name='scielo-test',
                  dbserver_url="localhost", port=27017):
         """
         """
-        self.client = MongoClient(dbserver_url, port)
+        self.client = MongoClient()
         self.db = self.client[database_name]
         self.scielo_client = RestfulClient()
 
@@ -64,46 +63,6 @@ class ScieloRequest:
                 journal_issn = journal['issns'][0]
                 journals_in_collection[journal_issn] = journal_name
         return journals_in_collection, len(journals_in_collection.keys())
-
-    '''@staticmethod
-    def update_status(code_article, dl_articles):
-        """Update articles downloaded status list for a specific collection.
-
-        The list is saved as text file.
-        """
-        dl_articles.append(code_article)
-        with open('status-bk2.txt', 'w') as f:
-            f.write(json.dumps(dl_articles))
-            '''
-
-    '''def check_status(self):
-        """Check the status for downloaded articles.
-
-        For a specific collection to avoid repeats
-        objects in the collection; if the collection is empty,
-        creates a list to save the downloaded article code id.
-        """
-        documents_count = self.db['stage'].count_documents({})
-        if documents_count == 0:
-            dl_articles = []
-            print(" Empty collection.")
-            return dl_articles
-        else:
-            with open('status-bk2.txt', 'r') as f:
-                dl_articles = json.loads(f.read())
-                if len(dl_articles) < documents_count:
-                    dl_articles = []
-                    print("Incomplete downloaded list. Building downloaded\n
-                          "status for articles in collection.")
-                    for article in self.db['stage'].find():
-                        code_article = article['code']
-                        dl_articles.append(code_article)
-                    print("Number of documents: {}").format(documents_count)
-                    return dl_articles
-                else:
-                    print("No empty collection.\n
-                          "Number of documents: {}".format(documents_count))
-                    return dl_articles'''
 
     def create_cache(self):
         """
