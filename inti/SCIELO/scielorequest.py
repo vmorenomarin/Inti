@@ -11,11 +11,10 @@ class ScieloRequest:
     The class methods use the SciELO API to get database documents.
 
     """
-    def __init__(self, database_name='scielo-test',
-                 dbserver_url="localhost", port=27017):
+    def __init__(self, database_name='scielo-test', host='localhost:27017'):
         """
         """
-        self.client = MongoClient()
+        self.client = MongoClient(host)
         self.db = self.client[database_name]
         self.scielo_client = RestfulClient()
 
