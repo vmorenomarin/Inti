@@ -11,10 +11,10 @@ class ScieloRequest:
     The class methods use the SciELO API to get database documents.
 
     """
-    def __init__(self, database_name='scielo-test', host='localhost:27017'):
+    def __init__(self, database_name='scielo-test'):
         """
         """
-        self.client = MongoClient(host)
+        self.client = MongoClient()
         self.db = self.client[database_name]
         self.scielo_client = RestfulClient()
 
@@ -45,7 +45,7 @@ class ScieloRequest:
         for collection in cursor:
             collection_code = collection['code']
             for journal in self.scielo_client.journals(collection_code):
-                journal['collection_id'] = collection['_id']
+                journal.data['collection_id'] = collection['_id']
                 self.db['journals'].insert_one(journal.data)
 
     def list_jornals_in_collection(self, collection_code):
