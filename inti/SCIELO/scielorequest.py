@@ -1,20 +1,22 @@
+"""Created by: Victor Moreno Marin."""
+
 from pymongo import MongoClient
 from articlemeta.client import RestfulClient
 import json
 
 
 class ScieloRequest:
-    """Requests class to build a SciELO database
-    with three central collections.
+    """Requests class to build a SciELO database."""
 
-    'collections' (mainly countries), 'journals' and 'articles'.
-    The class methods use the SciELO API to get database documents.
+    def __init__(self, database_name='scielo-test', host=None):
+        """
+        Build a database with three collections.
 
-    """
-    def __init__(self, database_name='scielo-test'):
+        'collections' (mainly countries), 'journals' and 'stage' that
+        contains articles data.
+        The class methods use the SciELO API to get database documents.
         """
-        """
-        self.client = MongoClient()
+        self.client = MongoClient(host)
         self.db = self.client[database_name]
         self.scielo_client = RestfulClient()
 
@@ -26,7 +28,9 @@ class ScieloRequest:
 
     def list_collections(self):
         """List database SciELO collections.
-        Displays its name and alpha-3 code."""
+
+        Displays its name and alpha-3 code.
+        """
         list_collections = []
         cursor = self.db["collections"].find()
         for collection in cursor:
@@ -54,6 +58,9 @@ class ScieloRequest:
         Returns a tuple with a dictionary
         that has ISSN code and journal name;
         the another object tuple's is the total journals number.
+
+        args:
+            collection_code: code from a specific SciELO collections.
         """
         journals_in_collection = {}
         for journal in self.db['journals'].find():
@@ -65,6 +72,11 @@ class ScieloRequest:
 
     def create_cache(self):
         """
+        Create a cache.
+
+        This method builds a collection to verifies full downloaded
+        journals. If journal articles as not been downloaded or are
+        incomplete, download status key has zero value.
         """
         cursor = self.db['journals'].find()
         data = {}
@@ -74,6 +86,15 @@ class ScieloRequest:
             self.db['cache'].insert_one(data)
 
     def check_cache(self):
+        """Check downloaded journals.
+
+        This method verifies which journals have been downloaded
+        before continues downloading SciELO articles.
+
+        If all journal articles have been downloaded,
+        this method avoid includes this journal in downloadable
+        journals and avoid repeated documents in articles collection.
+        """
         data = []
         list_id = []
         cursor = self.db['cache'].find()
@@ -87,10 +108,35 @@ class ScieloRequest:
         return data
 
     def update_cache(self, id_journal, new_data):
+        """Update downloaded status.
+
+        This method updates download status key to one when a
+        journal has been completelly downloaded.
+
+        args:
+            id_journal: ObjectId for not downloaded journal.
+            new_data: new key value to 1 if journal has been downloaded.
+        """
         cursor = self.db['cache'].find({'id_journal': id_journal})
         for cache_item in cursor:
             _id = cache_item['_id']
         self.db['cache'].update_one({'_id': _id}, {"$set": new_data})
+
+    def delete_articles(self, id_journal):
+        """Delete articles from an imcomplete downloaded journal.
+
+        The articles are delete in stage collection.
+
+        args:
+            id_journal: ObjectId for not downloaded journal.
+        """
+        cursor = self.db['stage'].find()
+        for article in cursor:
+            if id_journal != article.data['id_journal']:
+                continue
+            else:
+                article_id = article['_id']
+                self.db['stage'].delete_one({'_id': article_id})
 
     def get_articles(self):
         """Get raw data of articles from Scielo.
@@ -105,9 +151,10 @@ class ScieloRequest:
             if id_journal in data:
                 issn = journal['issns'][0]
                 code_collection = journal['collection']
+                self.delete_articles(id_journal)
                 documents = self.scielo_client.documents(code_collection, issn)
                 for article in documents:
-                    article.data['journal_id'] = journal['_id']
+                    article.data['id_journal'] = journal['_id']
                     self.db['stage'].insert_one(article.data)
                 new_data = {'id_journal': id_journal, 'downloaded': 1}
                 self.update_cache(id_journal, new_data)
