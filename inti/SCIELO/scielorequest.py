@@ -7,7 +7,7 @@ import json
 
 class ScieloRequest:
     """Requests class to build a SciELO database."""
-
+    
     def __init__(self, database_name='scielo-test', host=None):
         """
         Build a database with three collections.
