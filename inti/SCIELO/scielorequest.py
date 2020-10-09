@@ -2,13 +2,12 @@
 
 from pymongo import MongoClient
 from articlemeta.client import RestfulClient
-import json
 
 
 class ScieloRequest:
     """Requests class to build a SciELO database."""
-    
-    def __init__(self, database_name='scielo-test', host=None):
+
+    def __init__(self, db='scielo-test', host=None,):
         """
         Build a database with three collections.
 
@@ -17,7 +16,7 @@ class ScieloRequest:
         The class methods use the SciELO API to get database documents.
         """
         self.client = MongoClient(host)
-        self.db = self.client[database_name]
+        self.db = self.client[db]
         self.scielo_client = RestfulClient()
 
     def get_collections(self):
@@ -107,7 +106,7 @@ class ScieloRequest:
                 data.append(jrl_list)
         return data
 
-    def update_cache(self, id_journal, new_data):
+    def update_cache(self, id_journal):
         """Update downloaded status.
 
         This method updates download status key to one when a
@@ -115,11 +114,11 @@ class ScieloRequest:
 
         args:
             id_journal: ObjectId for not downloaded journal.
-            new_data: new key value to 1 if journal has been downloaded.
         """
         cursor = self.db['cache'].find({'id_journal': id_journal})
         for cache_item in cursor:
             _id = cache_item['_id']
+        new_data = {'id_journal': id_journal, 'downloaded': 1}
         self.db['cache'].update_one({'_id': _id}, {"$set": new_data})
 
     def delete_articles(self, id_journal):
@@ -130,9 +129,10 @@ class ScieloRequest:
         args:
             id_journal: ObjectId for not downloaded journal.
         """
-        cursor = self.db['stage'].find()
+        cursor = self.db['stage'].find({'id_journal': id_journal},
+                                        {'downloaded': 0})
         for article in cursor:
-            if id_journal != article.data['id_journal']:
+            if id_journal != article['id_journal']:
                 continue
             else:
                 article_id = article['_id']
@@ -156,7 +156,6 @@ class ScieloRequest:
                 for article in documents:
                     article.data['id_journal'] = journal['_id']
                     self.db['stage'].insert_one(article.data)
-                new_data = {'id_journal': id_journal, 'downloaded': 1}
-                self.update_cache(id_journal, new_data)
+                self.update_cache(id_journal)
             else:
                 continue
