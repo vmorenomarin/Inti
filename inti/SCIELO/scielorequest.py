@@ -6,7 +6,7 @@ from articlemeta.client import RestfulClient
 
 class ScieloRequest:
     """
-    Requests class using Scielo API.
+    Requests class using SciELO API.
 
     Build a SciELO database.
     """
