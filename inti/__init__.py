@@ -1,1 +1,0 @@
-from inti import MA
