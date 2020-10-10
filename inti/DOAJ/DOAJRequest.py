@@ -7,13 +7,15 @@ import numpy as np
 
 
 class DOAJRequest:
-    """Create a DOAJ object.
+    """
+    Create a DOAJ object.
 
     To request and save data from DOAJ site using its API.
     """
 
     def __init__(self, database_name, collection):
-        """Class to get requested data from DOAJ API.
+        """
+        Class to get requested data from DOAJ API.
 
         Requiere database name and inner collection to
         get the ISSN codes list.
@@ -40,7 +42,8 @@ class DOAJRequest:
         return pissn_list, eissn_list
 
     def getAPC(self, issn_list):
-        """Return whole data requested from DOAJ.
+        """
+        Return whole data requested from DOAJ.
 
         Data is storage as a dictionary. Also returns
         a dictionary only with hata that has APC values.
@@ -65,7 +68,8 @@ class DOAJRequest:
         return apc_dict, data_request
 
     def convert_apc2usd(self, dictionary):
-        """Convert APC average price to USD currency.
+        """
+        Convert APC average price to USD currency.
 
         Needs dictionary with ISSN with APC data.
         """

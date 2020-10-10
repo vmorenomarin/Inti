@@ -26,7 +26,8 @@ class ScieloRequest:
             self.db['collections'].insert_one(collection)
 
     def list_collections(self):
-        """List database SciELO collections.
+        """
+        List database SciELO collections.
 
         Displays its name and alpha-3 code.
         """
@@ -39,7 +40,8 @@ class ScieloRequest:
         return list_collections
 
     def get_journals(self):
-        """Get raw data of journals from SciELO.
+        """
+        Get raw data of journals from SciELO.
 
         A collection identification id is added in data
         to relate journals belong from each collection.
@@ -52,7 +54,8 @@ class ScieloRequest:
                 self.db['journals'].insert_one(journal.data)
 
     def list_jornals_in_collection(self, collection_code):
-        """List database SciELO collections.
+        """
+        List database SciELO collections.
 
         Returns a tuple with a dictionary
         that has ISSN code and journal name;
@@ -85,7 +88,8 @@ class ScieloRequest:
             self.db['cache'].insert_one(data)
 
     def check_cache(self):
-        """Check downloaded journals.
+        """
+        Check downloaded journals.
 
         This method verifies which journals have been downloaded
         before continues downloading SciELO articles.
@@ -102,7 +106,8 @@ class ScieloRequest:
         return data
 
     def update_cache(self, id_journal):
-        """Update downloaded status.
+        """
+        Update downloaded status.
 
         This method updates download status key to one when a
         journal has been completelly downloaded.
@@ -117,7 +122,8 @@ class ScieloRequest:
         self.db['cache'].update_one({'_id': _id}, {"$set": new_data})
 
     def delete_articles(self, id_journal):
-        """Delete articles from an imcomplete downloaded journal.
+        """
+        Delete articles from an imcomplete downloaded journal.
 
         The articles are delete in stage collection.
 
@@ -133,7 +139,8 @@ class ScieloRequest:
             pass
 
     def fix_cache(self):
-        """Re-build cache collecion.
+        """
+        Re-build cache collecion.
 
         If there are downloaded articles and cache collection
         all journals appear as not-downloaded, this method updates
@@ -148,7 +155,8 @@ class ScieloRequest:
             self.update_cache(jrl)
 
     def get_articles(self):
-        """Get raw data of articles from Scielo.
+        """
+        Get raw data of articles from Scielo.
 
         A journal identification is added in data to
         relate articles belong from each journal.
