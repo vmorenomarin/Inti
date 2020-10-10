@@ -7,7 +7,7 @@ import argparse
 import logging
 
 parser = argparse.ArgumentParser(description='Download Scielo collections,'
-                                    'journals and articles and.')
+                                 'journals and articles and.')
 parser.add_argument('--db', required=True, type=str,
                     help='Database name (example: scielo_db)')
 parser.add_argument('--host', required=True, type=str, default=None,
