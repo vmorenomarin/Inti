@@ -46,7 +46,8 @@ class MAMagBase:
 
     def create_indexes(self):
         print('Creating indexes '+self.col_indexes)
-        self.collection.create_index(self.col_indexes)
+        for index in self.col_indexes:
+            self.collection.create_index(index)
 
     def set_info_level(self, info_level):
         '''
