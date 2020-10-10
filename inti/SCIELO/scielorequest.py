@@ -5,8 +5,11 @@ from articlemeta.client import RestfulClient
 
 
 class ScieloRequest:
-    """Requests class to build a SciELO database."""
+    """
+    Requests class using Scielo API.
 
+    Build a SciELO database.
+    """
     def __init__(self, db='scielo-test', host=None,):
         """
         Build a database with three collections.

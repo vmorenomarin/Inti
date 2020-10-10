@@ -10,7 +10,7 @@ class DOAJRequest:
     """
     Create a DOAJ object.
 
-    To request and save data from DOAJ site using its API.
+    Request and save data from DOAJ site using its API.
     """
 
     def __init__(self, database_name, collection):
