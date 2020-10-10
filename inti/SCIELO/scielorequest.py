@@ -1,4 +1,4 @@
-"""Created by: Victor Moreno Marin."""
+"""Coded by: Victor Moreno Marin."""
 
 from pymongo import MongoClient
 from articlemeta.client import RestfulClient
@@ -95,15 +95,10 @@ class ScieloRequest:
         journals and avoid repeated documents in articles collection.
         """
         data = []
-        list_id = []
-        cursor = self.db['cache'].find()
+        cursor = self.db['cache'].find({'downloaded': 0})
         for cache_item in cursor:
-            list_id.append(cache_item['_id'])
-        for id_cache in list_id:
-            for dl_jrl in self.db['cache'].find({'_id': id_cache},
-                                                {'downloaded': 0}):
-                jrl_list = dl_jrl['id_journal']
-                data.append(jrl_list)
+            jrl_list = cache_item['id_journal']
+            data.append(jrl_list)
         return data
 
     def update_cache(self, id_journal):
@@ -129,14 +124,28 @@ class ScieloRequest:
         args:
             id_journal: ObjectId for not downloaded journal.
         """
-        cursor = self.db['stage'].find({'id_journal': id_journal},
-                                        {'downloaded': 0})
-        for article in cursor:
-            if id_journal != article['id_journal']:
-                continue
-            else:
+        cursor = self.db['stage'].find({'id_journal': id_journal})
+        if cursor:
+            for article in cursor:
                 article_id = article['_id']
                 self.db['stage'].delete_one({'_id': article_id})
+        else:
+            pass
+
+    def fix_cache(self):
+        """Re-build cache collecion.
+
+        If there are downloaded articles and cache collection
+        all journals appear as not-downloaded, this method updates
+        the cache with the correct values.
+        """
+        journal_id_list = []
+        cursor = self.db['cache'].find()
+        for article in cursor:
+            journal_id_list.append(article['journal_id'])
+        unique_jrl = set(journal_id_list)
+        for jrl in unique_jrl:
+            self.update_cache(jrl)
 
     def get_articles(self):
         """Get raw data of articles from Scielo.
