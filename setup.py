@@ -67,6 +67,7 @@ def main():
             'numpy==1.18.1',
             'requests==2.22.0',
             'psutil==5.7.0',
+            'articlemetaapi==1.26.7'
         ],
     )
 
