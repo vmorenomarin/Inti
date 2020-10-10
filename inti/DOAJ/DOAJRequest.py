@@ -1,7 +1,4 @@
-#!/usr/bin/env python3
-
-# author: Victor Moreno Marin, Gerardo Gutierrez
-# #email: vmorenomarin@gmail.com, muzgash@gmail.com
+"""Created by: Victor Moreno Marin."""
 
 from pymongo import MongoClient
 from forex_python.converter import CurrencyRates
@@ -10,13 +7,16 @@ import numpy as np
 
 
 class DOAJRequest:
-    """Create a DOAJ object to request and save data from DOAJ site using its API."""
+    """Create a DOAJ object.
+
+    To request and save data from DOAJ site using its API.
+    """
 
     def __init__(self, database_name, collection):
         """Class to get requested data from DOAJ API.
 
-        Requiere database name and inner collection to get the ISSN codes list.
-
+        Requiere database name and inner collection to
+        get the ISSN codes list.
         """
         self.client = MongoClient()
         self.db = self.client[database_name]
@@ -42,15 +42,16 @@ class DOAJRequest:
     def getAPC(self, issn_list):
         """Return whole data requested from DOAJ.
 
-        Data is storage as a dictionary.
-        Also returns a dictionary only with hata that has APC values.
+        Data is storage as a dictionary. Also returns
+        a dictionary only with hata that has APC values.
         """
         self.issn_list = issn_list
         apc_dict = {}
         data_request = {}
         for issn in self.issn_list:
             issn_formated = issn[:4]+'-'+issn[4:]
-            url_request = 'https://doaj.org/api/v1/search/journals/{0}'.format(issn_formated)
+            url_request = ('https://doaj.org/api/''v1/search' +
+                           '/journals/{0}'.format(issn_formated))
             response = requests.get(url_request)
             data = response.json()
             data_request = data
@@ -65,7 +66,7 @@ class DOAJRequest:
 
     def convert_apc2usd(self, dictionary):
         """Convert APC average price to USD currency.
-        
+
         Needs dictionary with ISSN with APC data.
         """
         self.dictionary = dictionary
@@ -75,9 +76,11 @@ class DOAJRequest:
             if self.dictionary[issn]['currency'] != 'USD':
                 currency_foreign = self.dictionary[issn]['currency']
                 avr_price_foreign = self.dictionary[issn]['average_price']
-                usd_currency = c.convert(currency_foreign, 'USD', avr_price_foreign)
+                usd_currency = c.convert(currency_foreign, 'USD',
+                                         avr_price_foreign)
                 # Update dictionaty with APC in USD currency.
                 usd_currency_aprox = int(np.floor(usd_currency))
-                self.dictionary[issn] = {'currency': 'USD', 'average_price': usd_currency_aprox}
+                self.dictionary[issn] = {'currency': 'USD',
+                                         'average_price': usd_currency_aprox}
 
         return self.dictionary
