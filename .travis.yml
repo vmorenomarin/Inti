@@ -6,8 +6,8 @@ python:
   - "3.7-dev"  # 3.7 development branch
 # command to install dependencies
 install:
-  - python3 -m pip3 install --upgrade setuptools twine 
-  - python3 -m pip3 install -r requirements.txt 
+  - pip3 install --upgrade setuptools twine 
+  - pip3 install -r requirements.txt 
 # command to run tests
 script:
   - python3 setup.py -q install
