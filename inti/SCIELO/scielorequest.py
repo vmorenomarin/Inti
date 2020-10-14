@@ -1,4 +1,9 @@
-"""Coded by: Victor Moreno Marin."""
+"""
+Application author details.
+
+author="Colav",
+author_email="colav@udea.edu.co".
+"""
 
 from pymongo import MongoClient
 from articlemeta.client import RestfulClient
