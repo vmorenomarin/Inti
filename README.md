@@ -7,6 +7,6 @@ Capture system from non scrapping data sources
 `
 python3 run_mamagloader.py --mag_dir=/storage/colav/mag_sample/ --db=MA
 `
-## Example running SciELO REquest and build a MongoDB
+## Example running SciELO Request and build a MongoDB
 `
 python3 run_scieloloader.py --db=scielo
