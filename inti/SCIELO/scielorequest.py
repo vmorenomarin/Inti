@@ -10,6 +10,7 @@ class ScieloRequest:
 
     Build a SciELO database.
     """
+    
     def __init__(self, db='scielo-test', host=None,):
         """
         Build a database with three collections.
