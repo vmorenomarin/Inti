@@ -4,9 +4,7 @@
 Capture system from non scrapping data sources
 
 ## Example running save MAG in MongoDB
-`
-python3 run_mamagloader.py --mag_dir=/storage/colav/mag_sample/ --db=MA
-`
+`python3 run_mamagloader.py --mag_dir=/storage/colav/mag_sample/ --db=MA`
+
 ## Example running SciELO Request and build a MongoDB
-`
-python3 run_scieloloader.py --db=scielo
+`python3 run_scieloloader.py --db=scielo`
