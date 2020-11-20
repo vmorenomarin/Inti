@@ -1,17 +1,14 @@
 import unittest
-from inti.SCIELO.scielorequest import scielorequest 
+import json
+from inti.SCIELO.scielorequest import scielorequest
+from pymongo import MongoClient
+
 
 class TestScieloRequest(unittest.TestCase):
-    """
-    Testing class.
-    """
-    
-    def setUp(self):
-        self.scielorequest=self.ScieloRequest(db='scielo', host=None)
+    """ Testing class. """
 
-   """  def test_default_greeting_set(self):
-        self.assertEqual("Hello world!", 'Hello world!')
-        self.assertEqual() """
+    def setUp(self):
+        self.scielorequest = self.ScieloRequest(db='scielo', host=None)
 
     def test__scielorequest_initialization(self):
         self.assertEqual(self.scielorequest.db, 'scielo')
@@ -21,14 +18,37 @@ class TestScieloRequest(unittest.TestCase):
         """Test get_collections method.""""
 
         collections = ''
-        with open('tests/collections.josn' as f:
-            collections = f.read()
-            f.close()
+        f = open('tests/collections.json')
+        collections = json.load(f)
         self.assertNotEqual(collections, '')
-        scl = self.scielorequest.get_collections()
+        s_cols = self.scielorequest.get_collections()
 
-        for col,scol in zip(collections,scl):
-            self.assertEqual(col,scol)
+        for col, s_col in zip(collections, s_cols):
+            for key in col.keys():
+                self.assertEqual(col[key], s_col[key])
+
+    def test__get_journals(self):
+        """Test get_journals method.""""
+
+        journals = ''
+        f = open('tests/journals.json')
+        journals = json.load(f)
+        self.assertNotEqual(journals, '')
+        s_jrls = self.scielorequest.get_journals()
+
+        for jrl, s_jrl in zip(journals, s_jrls):
+            for key in in jrl.keys():
+                self.assertEqual(jrl[key], s_jrl[key])
+
+    def dl_limiter(n_articles=5):
+        """Limits the downloaded articles to test.""""
+
+    def test__get_articles(self):
+        """Test get_articles method.""""
+
+        stage = ''
+        f = open('tests/stage.json')
+
 
 if __name__ == '__main__':
     unittest.main()
