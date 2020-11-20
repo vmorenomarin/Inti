@@ -1,0 +1,678 @@
+[
+    {
+        "original_name": "Argentina",
+        "document_count": 43269,
+        "acron": "arg",
+        "journal_count": {
+            "deceased": 54,
+            "current": 97
+        },
+        "domain": "www.scielo.org.ar",
+        "code": "arg",
+        "is_active": true,
+        "has_analytics": true,
+        "type": "journals",
+        "acron2": "ar",
+        "name": {
+            "en": "Argentina",
+            "es": "Argentina",
+            "pt": "Argentina"
+        },
+        "status": "certified"
+    },
+    {
+        "original_name": "Chile",
+        "document_count": 70318,
+        "acron": "chl",
+        "journal_count": {
+            "suspended": 2,
+            "deceased": 15,
+            "current": 116
+        },
+        "domain": "www.scielo.cl",
+        "code": "chl",
+        "is_active": true,
+        "has_analytics": true,
+        "type": "journals",
+        "acron2": "cl",
+        "name": {
+            "en": "Chile",
+            "es": "Chile",
+            "pt": "Chile"
+        },
+        "status": "certified"
+    },
+    {
+        "original_name": "Colombia",
+        "document_count": 79151,
+        "acron": "col",
+        "journal_count": {
+            "suspended": 18,
+            "current": 225
+        },
+        "domain": "www.scielo.org.co",
+        "code": "col",
+        "is_active": true,
+        "has_analytics": true,
+        "type": "journals",
+        "acron2": "co",
+        "name": {
+            "en": "Colombia",
+            "es": "Colombia",
+            "pt": "Colombia"
+        },
+        "status": "certified"
+    },
+    {
+        "original_name": "Cuba",
+        "document_count": 33478,
+        "acron": "cub",
+        "journal_count": {
+            "suspended": 8,
+            "deceased": 2,
+            "current": 68
+        },
+        "domain": "scielo.sld.cu",
+        "code": "cub",
+        "is_active": true,
+        "has_analytics": true,
+        "type": "journals",
+        "acron2": "cu",
+        "name": {
+            "en": "Cuba",
+            "es": "Cuba",
+            "pt": "Cuba"
+        },
+        "status": "certified"
+    },
+    {
+        "original_name": "Espa\u00f1a",
+        "document_count": 40738,
+        "acron": "esp",
+        "journal_count": {
+            "suspended": 13,
+            "deceased": 7,
+            "current": 40
+        },
+        "domain": "scielo.isciii.es",
+        "code": "esp",
+        "is_active": true,
+        "has_analytics": true,
+        "type": "journals",
+        "acron2": "es",
+        "name": {
+            "en": "Spain",
+            "es": "Espa\u00f1a",
+            "pt": "Espanha"
+        },
+        "status": "certified"
+    },
+    {
+        "original_name": "Mexico",
+        "document_count": 71887,
+        "acron": "mex",
+        "journal_count": {
+            "suspended": 101,
+            "deceased": 12,
+            "current": 119
+        },
+        "domain": "www.scielo.org.mx",
+        "code": "mex",
+        "is_active": true,
+        "has_analytics": true,
+        "type": "journals",
+        "acron2": "mx",
+        "name": {
+            "en": "Mexico",
+            "es": "Mexico",
+            "pt": "Mexico"
+        },
+        "status": "certified"
+    },
+    {
+        "original_name": "Portugal",
+        "document_count": 20864,
+        "acron": "prt",
+        "journal_count": {
+            "suspended": 19,
+            "deceased": 5,
+            "current": 45
+        },
+        "domain": "www.scielo.mec.pt",
+        "code": "prt",
+        "is_active": true,
+        "has_analytics": true,
+        "type": "journals",
+        "acron2": "pt",
+        "name": {
+            "en": "Portugal",
+            "es": "Portugal",
+            "pt": "Portugal"
+        },
+        "status": "certified"
+    },
+    {
+        "original_name": "SciELO Books",
+        "type": "books",
+        "acron": "books",
+        "domain": "books.scielo.org",
+        "name": {
+            "en": "SciELO Books",
+            "es": "SciELO Libros",
+            "pt": "SciELO Livros"
+        },
+        "code": "books",
+        "is_active": true,
+        "has_analytics": false
+    },
+    {
+        "original_name": "Brasil",
+        "document_count": 415375,
+        "acron": "scl",
+        "journal_count": {
+            "suspended": 39,
+            "deceased": 42,
+            "current": 296
+        },
+        "domain": "www.scielo.br",
+        "code": "scl",
+        "is_active": true,
+        "has_analytics": true,
+        "type": "journals",
+        "acron2": "br",
+        "name": {
+            "en": "Brazil",
+            "es": "Brasil",
+            "pt": "Brasil"
+        },
+        "status": "certified"
+    },
+    {
+        "original_name": "Sa\u00fade P\u00fablica",
+        "document_count": 45345,
+        "acron": "spa",
+        "journal_count": {
+            "suspended": 2,
+            "current": 18
+        },
+        "domain": "www.scielosp.org",
+        "code": "spa",
+        "is_active": true,
+        "has_analytics": true,
+        "type": "journals",
+        "acron2": "sp",
+        "name": {
+            "en": "Public Health",
+            "es": "Salud Publica",
+            "pt": "Sa\u00fade P\u00fablica"
+        },
+        "status": "certified"
+    },
+    {
+        "original_name": "Social Sciences",
+        "document_count": 665,
+        "acron": "sss",
+        "journal_count": {
+            "current": 33
+        },
+        "domain": "socialsciences.scielo.org",
+        "code": "sss",
+        "is_active": false,
+        "has_analytics": true,
+        "type": "journals",
+        "acron2": "ss",
+        "name": {
+            "en": "Social Sciences",
+            "es": "Social Sciences",
+            "pt": "Social Sciences"
+        },
+        "status": "certified"
+    },
+    {
+        "original_name": "South Africa",
+        "document_count": 32032,
+        "acron": "sza",
+        "journal_count": {
+            "deceased": 1,
+            "current": 80
+        },
+        "domain": "www.scielo.org.za",
+        "code": "sza",
+        "is_active": true,
+        "has_analytics": true,
+        "type": "journals",
+        "acron2": "za",
+        "name": {
+            "en": "South Africa",
+            "es": "Sud\u00e1frica",
+            "pt": "\u00c1frica do Sul"
+        },
+        "status": "certified"
+    },
+    {
+        "original_name": "Venezuela",
+        "document_count": 18971,
+        "acron": "ven",
+        "journal_count": {
+            "suspended": 23,
+            "current": 35
+        },
+        "domain": "ve.scielo.org",
+        "code": "ven",
+        "is_active": true,
+        "has_analytics": true,
+        "type": "journals",
+        "acron2": "ve",
+        "name": {
+            "en": "Venezuela",
+            "es": "Venezuela",
+            "pt": "Venezuela"
+        },
+        "status": "development"
+    },
+    {
+        "original_name": "Biodiversity Heritage Library",
+        "document_count": null,
+        "acron": "bio",
+        "journal_count": {},
+        "domain": "www.biodiversitylibrary.org/browse/contributor/SCIELO",
+        "code": "bio",
+        "is_active": true,
+        "has_analytics": false,
+        "type": "journals",
+        "acron2": "bi",
+        "name": {
+            "en": "Biodiversity Heritage Library",
+            "es": "Biodiversity Heritage Library",
+            "pt": "Biodiversity Heritage Library"
+        },
+        "status": "diffusion"
+    },
+    {
+        "original_name": "Bolivia",
+        "document_count": 4758,
+        "acron": "bol",
+        "journal_count": {
+            "suspended": 2,
+            "current": 20
+        },
+        "domain": "www.scielo.org.bo",
+        "code": "bol",
+        "is_active": true,
+        "has_analytics": true,
+        "type": "journals",
+        "acron2": "bo",
+        "name": {
+            "en": "Bolivia",
+            "es": "Bolivia",
+            "pt": "Bolivia"
+        },
+        "status": "certified"
+    },
+    {
+        "original_name": "Costa Rica",
+        "document_count": 10785,
+        "acron": "cri",
+        "journal_count": {
+            "suspended": 4,
+            "deceased": 1,
+            "current": 41
+        },
+        "domain": "www.scielo.sa.cr",
+        "code": "cri",
+        "is_active": true,
+        "has_analytics": true,
+        "type": "journals",
+        "acron2": "cr",
+        "name": {
+            "en": "Costa Rica",
+            "es": "Costa Rica",
+            "pt": "Costa Rica"
+        },
+        "status": "certified"
+    },
+    {
+        "original_name": "Peru",
+        "document_count": 11865,
+        "acron": "per",
+        "journal_count": {
+            "current": 33
+        },
+        "domain": "www.scielo.org.pe",
+        "code": "per",
+        "is_active": true,
+        "has_analytics": true,
+        "type": "journals",
+        "acron2": "pe",
+        "name": {
+            "en": "Peru",
+            "es": "Peru",
+            "pt": "Peru"
+        },
+        "status": "certified"
+    },
+    {
+        "original_name": "Proceedings",
+        "document_count": null,
+        "acron": "pro",
+        "journal_count": {},
+        "domain": "www.proceedings.scielo.br",
+        "code": "pro",
+        "is_active": false,
+        "has_analytics": false,
+        "type": "journals",
+        "acron2": "pro",
+        "name": {
+            "en": "Proceedings",
+            "es": "Proceedings",
+            "pt": "Proceedings"
+        },
+        "status": "diffusion"
+    },
+    {
+        "original_name": "Paraguay",
+        "document_count": 2753,
+        "acron": "pry",
+        "journal_count": {
+            "suspended": 1,
+            "current": 15
+        },
+        "domain": "scielo.iics.una.py",
+        "code": "pry",
+        "is_active": true,
+        "has_analytics": true,
+        "type": "journals",
+        "acron2": "py",
+        "name": {
+            "en": "Paraguay",
+            "es": "Paraguay",
+            "pt": "Paraguai"
+        },
+        "status": "certified"
+    },
+    {
+        "original_name": "Uruguay",
+        "document_count": 5387,
+        "acron": "ury",
+        "journal_count": {
+            "deceased": 5,
+            "current": 22
+        },
+        "domain": "www.scielo.edu.uy",
+        "code": "ury",
+        "is_active": true,
+        "has_analytics": true,
+        "type": "journals",
+        "acron2": "uy",
+        "name": {
+            "en": "Uruguay",
+            "es": "Uruguay",
+            "pt": "Uruguai"
+        },
+        "status": "certified"
+    },
+    {
+        "original_name": "West Indies",
+        "document_count": 1460,
+        "acron": "wid",
+        "journal_count": {
+            "current": 1
+        },
+        "domain": "westindies.scielo.org",
+        "code": "wid",
+        "is_active": true,
+        "has_analytics": true,
+        "type": "journals",
+        "acron2": "wi",
+        "name": {
+            "en": "West Indies",
+            "es": "Indias Occidentales",
+            "pt": "\u00cdndias Ocidentais"
+        },
+        "status": "development"
+    },
+    {
+        "original_name": "ComCi\u00eancia",
+        "document_count": null,
+        "acron": "cci",
+        "journal_count": {},
+        "domain": "comciencia.scielo.br",
+        "code": "cci",
+        "is_active": false,
+        "has_analytics": false,
+        "type": "journals",
+        "acron2": "cc",
+        "name": {
+            "en": "ComCi\u00eancia",
+            "es": "ComCi\u00eancia",
+            "pt": "ComCi\u00eancia"
+        },
+        "status": "diffusion"
+    },
+    {
+        "original_name": "Ci\u00eancia e Cultura",
+        "document_count": 1899,
+        "acron": "cic",
+        "journal_count": {
+            "current": 1
+        },
+        "domain": "cienciaecultura.bvs.br",
+        "code": "cic",
+        "is_active": true,
+        "has_analytics": false,
+        "type": "journals",
+        "acron2": "ci",
+        "name": {
+            "en": "Ci\u00eancia e Cultura",
+            "es": "Ci\u00eancia e Cultura",
+            "pt": "Ci\u00eancia e Cultura"
+        },
+        "status": "diffusion"
+    },
+    {
+        "original_name": "Conhecimento & Inova\u00e7\u00e3o",
+        "document_count": null,
+        "acron": "inv",
+        "journal_count": {},
+        "domain": "inovacao.scielo.br",
+        "code": "inv",
+        "is_active": false,
+        "has_analytics": false,
+        "type": "journals",
+        "acron2": "cinov",
+        "name": {
+            "en": "Conhecimento & Inova\u00e7\u00e3o",
+            "es": "Conhecimento & Inova\u00e7\u00e3o",
+            "pt": "Conhecimento & Inova\u00e7\u00e3o"
+        },
+        "status": "diffusion"
+    },
+    {
+        "original_name": "Pesquisa Fapesp",
+        "document_count": null,
+        "acron": "pef",
+        "journal_count": {},
+        "domain": "revistapesquisa.fapesp.br",
+        "code": "pef",
+        "is_active": true,
+        "has_analytics": false,
+        "type": "journals",
+        "acron2": "pef",
+        "name": {
+            "en": "Pesquisa FAPESP",
+            "es": "Pesquisa FAPESP",
+            "pt": "Pesquisa FAPESP"
+        },
+        "status": "diffusion"
+    },
+    {
+        "original_name": "Educa",
+        "document_count": null,
+        "acron": "edc",
+        "journal_count": {},
+        "domain": "educa.fcc.org.br",
+        "code": "edc",
+        "is_active": true,
+        "has_analytics": false,
+        "type": "journals",
+        "acron2": "educa",
+        "name": {
+            "en": "Educa",
+            "es": "Educa",
+            "pt": "Educa"
+        },
+        "status": "independent"
+    },
+    {
+        "original_name": "PPEGEO",
+        "document_count": null,
+        "acron": "ppg",
+        "journal_count": {},
+        "domain": "ppegeo.igc.usp.br",
+        "code": "ppg",
+        "is_active": true,
+        "has_analytics": false,
+        "type": "journals",
+        "acron2": "ppegeo",
+        "name": {
+            "en": "Portal de Peri\u00f3dicos Eletr\u00f4nicos em Geoci\u00eancias",
+            "es": "Portal de Peri\u00f3dicos Eletr\u00f4nicos em Geoci\u00eancias",
+            "pt": "Portal de Peri\u00f3dicos Eletr\u00f4nicos em Geoci\u00eancias"
+        },
+        "status": "independent"
+    },
+    {
+        "original_name": "PEPSIC",
+        "document_count": 27948,
+        "acron": "psi",
+        "journal_count": {
+            "inprogress": 3,
+            "suspended": 31,
+            "deceased": 24,
+            "current": 93
+        },
+        "domain": "pepsic.bvsalud.org",
+        "code": "psi",
+        "is_active": true,
+        "has_analytics": true,
+        "type": "journals",
+        "acron2": "pepsic",
+        "name": {
+            "en": "Peri\u00f3dicos Eletr\u00f4nicos em Psicologia",
+            "es": "Peri\u00f3dicos Eletr\u00f4nicos em Psicologia",
+            "pt": "Peri\u00f3dicos Eletr\u00f4nicos em Psicologia"
+        },
+        "status": "independent"
+    },
+    {
+        "original_name": "REVENF",
+        "document_count": 26507,
+        "acron": "rve",
+        "journal_count": {
+            "suspended": 4,
+            "current": 14
+        },
+        "domain": "www.revenf.bvs.br",
+        "code": "rve",
+        "is_active": true,
+        "has_analytics": true,
+        "type": "journals",
+        "acron2": "revenf",
+        "name": {
+            "en": "Revista de Enfermagem",
+            "es": "Revista de Enfermagem",
+            "pt": "Revista de Enfermagem"
+        },
+        "status": "independent"
+    },
+    {
+        "original_name": "RevOdonto",
+        "document_count": null,
+        "acron": "rvo",
+        "journal_count": {},
+        "domain": "revodonto.bvsalud.org",
+        "code": "rvo",
+        "is_active": true,
+        "has_analytics": false,
+        "type": "journals",
+        "acron2": "revodonto",
+        "name": {
+            "en": "RevOdonto",
+            "es": "RevOdonto",
+            "pt": "RevOdonto"
+        },
+        "status": "independent"
+    },
+    {
+        "original_name": "SES",
+        "document_count": null,
+        "acron": "ses",
+        "journal_count": {},
+        "domain": "periodicos.ses.sp.bvs.br",
+        "code": "ses",
+        "is_active": true,
+        "has_analytics": false,
+        "type": "journals",
+        "acron2": "ses",
+        "name": {
+            "en": "Portal de Revistas - SES",
+            "es": "Portal de Revistas - SES",
+            "pt": "Portal de Revistas - SES"
+        },
+        "status": "independent"
+    },
+    {
+        "original_name": "Ecuador",
+        "document_count": 1530,
+        "acron": "ecu",
+        "journal_count": {
+            "current": 17
+        },
+        "domain": "scielo.senescyt.gob.ec",
+        "code": "ecu",
+        "is_active": true,
+        "has_analytics": true,
+        "type": "journals",
+        "acron2": "ec",
+        "name": {
+            "en": "Ecuador",
+            "es": "Ecuador",
+            "pt": "Equador"
+        },
+        "status": "development"
+    },
+    {
+        "original_name": "RevTur",
+        "document_count": 1366,
+        "acron": "rvt",
+        "journal_count": {
+            "current": 1
+        },
+        "domain": "www.revtur.org",
+        "code": "rvt",
+        "is_active": true,
+        "has_analytics": true,
+        "type": "journals",
+        "acron2": "revtur",
+        "name": {
+            "en": "RevTur",
+            "es": "RevTur",
+            "pt": "RevTur"
+        },
+        "status": "independent"
+    },
+    {
+        "original_name": "SciELO Preprints",
+        "type": "preprints",
+        "acron": "preprints",
+        "domain": "preprints.scielo.org",
+        "name": {
+            "en": "SciELO Preprints",
+            "es": "SciELO Preprints",
+            "pt": "SciELO Preprints"
+        },
+        "code": "preprints",
+        "is_active": true,
+        "has_analytics": false
+    }
+]
