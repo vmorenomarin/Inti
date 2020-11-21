@@ -55,6 +55,17 @@ class TestScieloRequest(unittest.TestCase):
             for key in jrl.keys():
                 self.assertEqual(jrl[key], s_jrl[key])
 
+    def test_create_cache(self):
+        cache = ''
+        self.assertNotEqual(cache, '')
+        self.scielorequest.create_cache()
+
+        self.client = MongoClient()
+        self.db = self.client['scielo']
+        jrls_count = self.db['journals'].count()
+        jrls_count = self.db['cache'].count()
+        self.assertEqual(jrl[key], s_jrl[key])
+
 
 if __name__ == '__main__':
     unittest.main()
