@@ -1,14 +1,16 @@
 import unittest
 import json
-from inti.SCIELO.scielorequest import ScieloRequest
 from pymongo import MongoClient
+import sys
+sys.path.append("/home/victor/Insync/vmorenomarin@gmail.com/GoogleDrive/git/Inti/")
+from inti.SCIELO.ScieloRequest import ScieloRequest
 
 
 class TestScieloRequest(unittest.TestCase):
     """Testing class."""
 
     def setUp(self):
-        self.scielorequest = self.ScieloRequest(db='scielo', host=None)
+        self.scielorequest = ScieloRequest(db='scielo', host=None)
 
     def test__scielorequest_initialization(self):
         self.assertEqual(self.scielorequest.db, 'scielo')
@@ -21,7 +23,11 @@ class TestScieloRequest(unittest.TestCase):
         f = open('tests/collections.json')
         collections = json.load(f)
         self.assertNotEqual(collections, '')
-        s_cols = self.scielorequest.get_collections()
+        self.scielorequest.get_collections()
+
+        self.client = MongoClient()
+        self.db = self.client['scielo']
+        s_cols = self.db['collections'].find()
 
         for col, s_col in zip(collections, s_cols):
             for key in col.keys():
@@ -34,21 +40,12 @@ class TestScieloRequest(unittest.TestCase):
         f = open('tests/journals.json')
         journals = json.load(f)
         self.assertNotEqual(journals, '')
-        s_jrls = self.scielorequest.get_journals()
+        self.scielorequest.get_journals()
+
+        self.client = MongoClient()
+        self.db = self.client['scielo']
+        s_jrls = self.db['journals'].find()
 
         for jrl, s_jrl in zip(journals, s_jrls):
             for key in jrl.keys():
                 self.assertEqual(jrl[key], s_jrl[key])
-
-    # def dl_limiter(n_articles=5):
-    #     """Limits the downloaded articles to test.""""
-
-    # def test__get_articles(self):
-    #     """Test get_articles method.""""
-
-    #     stage = ''
-    #     f = open('tests/stage.json')
-    #     self.assertListEqual()
-
-if __name__ == '__main__':
-    unittest.main()
