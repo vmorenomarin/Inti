@@ -56,6 +56,7 @@ class TestScieloRequest(unittest.TestCase):
                 self.assertEqual(jrl[key], s_jrl[key])
 
     def test_create_cache(self):
+        """Test create_cache method."""
         cache = ''
         self.assertNotEqual(cache, '')
         self.scielorequest.create_cache()
