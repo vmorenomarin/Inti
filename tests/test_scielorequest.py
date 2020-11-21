@@ -54,3 +54,7 @@ class TestScieloRequest(unittest.TestCase):
         for jrl, s_jrl in zip(journals, s_jrls):
             for key in jrl.keys():
                 self.assertEqual(jrl[key], s_jrl[key])
+
+
+if __name__ == '__main__':
+    unittest.main()
