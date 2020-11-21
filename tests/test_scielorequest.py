@@ -63,8 +63,8 @@ class TestScieloRequest(unittest.TestCase):
         self.client = MongoClient()
         self.db = self.client['scielo']
         jrls_count = self.db['journals'].count()
-        jrls_count = self.db['cache'].count()
-        self.assertEqual(jrl[key], s_jrl[key])
+        cache_count = self.db['cache'].count()
+        self.assertEqual(jrls_count, cache_count)
 
 
 if __name__ == '__main__':
