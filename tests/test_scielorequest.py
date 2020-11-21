@@ -1,8 +1,13 @@
+"""
+Application author details.
+
+author="Colav",
+author_email="colav@udea.edu.co".
+"""
+
 import unittest
 import json
 from pymongo import MongoClient
-import sys
-sys.path.append("/home/victor/Insync/vmorenomarin@gmail.com/GoogleDrive/git/Inti/")
 from inti.SCIELO.ScieloRequest import ScieloRequest
 
 
@@ -10,15 +15,16 @@ class TestScieloRequest(unittest.TestCase):
     """Testing class."""
 
     def setUp(self):
+        """Test setup."""
         self.scielorequest = ScieloRequest(db='scielo', host=None)
 
     def test__scielorequest_initialization(self):
+        """Test class initialization."""
         self.assertEqual(self.scielorequest.db, 'scielo')
         self.assertEqual(self.scielorequest.host, None)
 
     def test__get_collections(self):
         """Test get_collections method."""
-
         collections = ''
         f = open('tests/collections.json')
         collections = json.load(f)
@@ -35,7 +41,6 @@ class TestScieloRequest(unittest.TestCase):
 
     def test__get_journals(self):
         """Test get_journals method."""
-
         journals = ''
         f = open('tests/journals.json')
         journals = json.load(f)
