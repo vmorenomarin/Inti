@@ -23,7 +23,7 @@ class TestScieloRequest(unittest.TestCase):
     #     self.assertEqual(self.scielorequest.db, 'scielo')
     #     self.assertEqual(self.scielorequest.host, None)
 
-    def test__get_collections(self):
+    def test_get_collections(self):
         """Test get_collections method."""
         collections = ''
         f = open('tests/collections.json')
@@ -39,7 +39,7 @@ class TestScieloRequest(unittest.TestCase):
             for key in col.keys():
                 self.assertEqual(col[key], s_col[key])
 
-    def test__get_journals(self):
+    def test_get_journals(self):
         """Test get_journals method."""
         journals = ''
         f = open('tests/journals.json')
