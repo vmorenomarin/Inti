@@ -18,10 +18,10 @@ class TestScieloRequest(unittest.TestCase):
         """Test setup."""
         self.scielorequest = ScieloRequest(db='scielo', host=None)
 
-    def test__scielorequest_initialization(self):
-        """Test class initialization."""
-        self.assertEqual(self.scielorequest.db, 'scielo')
-        self.assertEqual(self.scielorequest.host, None)
+    # def test__scielorequest_initialization(self):
+    #     """Test class initialization."""
+    #     self.assertEqual(self.scielorequest.db, 'scielo')
+    #     self.assertEqual(self.scielorequest.host, None)
 
     def test__get_collections(self):
         """Test get_collections method."""
