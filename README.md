@@ -10,7 +10,7 @@ Capture system from non scrapping data sources
 `python3 run_scieloloader.py --db=scielo`
 
 ### Running creating an instance
-\
+
 ```from ScieloRequest import ScieloRequest```\
 ```sr=ScieloRequest(db="Scielo")```
 
@@ -24,7 +24,7 @@ ScieloRequest has three methods to get collections, journals and articles. The n
     **Example:** ```sr.get_journals()```
 - ```get_articles()```: To get whole the articles from Scielo, saving the articles data.
     - **How to use:** only run the method in the created instance.\
-    **Example:** ```sr.get_journals()```\
+    **Example:** ```sr.get_journals()```
 
 When run first method, a Mongo database is builded. After run is finished correctly, the Mongo database has three collections: collections, journals and stage (articles). 
 
