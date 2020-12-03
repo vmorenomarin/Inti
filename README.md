@@ -52,7 +52,7 @@ In both latest methods, ```id_journal``` refers to he document id (ObjectId) in 
 - ```fix_cache()```: Re-build cache collecion. If there are downloaded articles and cache collection
 all journals appear as not-downloaded, this method updates the cache with the correct values.
     - **How to use:** only run the method in the created instance.\
-    **Example:** ```sr.fix_cache()`
+    **Example:** ```sr.fix_cache()```
 
 
 
