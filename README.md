@@ -32,15 +32,21 @@ When run first method, a Mongo database is built. After run is finished correctl
 
 To get a checkpoint to recover the downloaded articles state, the class has three methods.
 
-* ```create_cache()```: This method builds a collection to verifies full downloaded journals.
+- ```create_cache()```: This method builds a collection to verifies full downloaded journals.
     - **How to use:** only run the method in the created instance.\
     **Example:** ```sr.create_cache()```
 
-If articles downloading is broke up, ```get_articles()method``` has to inner method to verifies the download articles, delete articles if journal has uncompleted download items (articles) and continua from the 
+If articles downloading is broke up, ```get_articles()``` method has to inner method to verifies the download articles, delete articles if journal has uncompleted download items (articles) and continue from the latest fully downloaded journal.
 
 #### **Checkpoint methods used by ```get_articles()``` method**
 
-Next methods are used in  
+Next two methods are used in by ```get_articles()``` in order to avoid repated documents in Mongo database.\
+- ```update_cache(id_journal)```: This method updates download status key to one when a journal has been completelly downloaded.
+- ```delete_articles(id_journal)```: Delete articles from an uncompleted downloaded journal. The articles are delete in stage collection.
+
+In both latest methods, ```id_journal``` refers to he document id (ObjectId) in databse, assigned by Mongo when a journal is saved by ```get_journal()``` in journal collection.
+
+
 
 
 
